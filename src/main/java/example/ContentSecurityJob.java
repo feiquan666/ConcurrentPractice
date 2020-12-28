@@ -1,6 +1,5 @@
 package example;
 
-import com.alibaba.fastjson.JSON;
 import example.mock.ArticleImgField;
 import example.mock.ArticleMapper;
 import example.mock.ContentSecurityFeign;
@@ -107,7 +106,7 @@ public class ContentSecurityJob {
 			String finalStrImages = StringUtil.isTrimEmpty(strConImages)
 					? StringUtil.isTrimEmpty(strImages) ? null : strImages : strConImages;
 			if (!StringUtil.isTrimEmpty(finalStrImages)) {
-				List<ImageStruct> imageStructs = JSON.parseArray(finalStrImages, ImageStruct.class);
+				List<ImageStruct> imageStructs = null;
 				if (CollectionUtils.isNotEmpty(imageStructs)) {
 					List<String> imgUrls = imageStructs.stream().map(ImageStruct::getUrl)
 							.collect(Collectors.toList());
