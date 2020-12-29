@@ -1,4 +1,4 @@
-package flink;
+package example.flink;
 
 import java.util.Arrays;
 import org.apache.flink.api.common.typeinfo.Types;
@@ -16,10 +16,10 @@ public class FlinkTest {
 		// 获取源数据
 		DataStream<String> lines = env.socketTextStream("localhost", 8888);
 		// 数据处理
-		SingleOutputStreamOperator<String> word = lines
+		DataStream<String> word = lines
 				.flatMap((String line, Collector<String> out) -> Arrays.stream(line.split(" "))
 						.forEach(out::collect)).returns(Types.STRING);
-		SingleOutputStreamOperator<Tuple2<String, Integer>> wordAndOne = word.map(w -> Tuple2.of(w, 1)).returns(
+		DataStream<Tuple2<String, Integer>> wordAndOne = word.map(w -> Tuple2.of(w, 1)).returns(
 				Types.TUPLE(Types.STRING, Types.INT));
 		SingleOutputStreamOperator<Tuple2<String, Integer>> sumed = wordAndOne.keyBy(0).sum(1);
 		// 结果输出
